@@ -27,9 +27,9 @@ x_direction = 0
 total_distance = 0
 high_score = 0
 game_over = False
-pygame.mixer.music.load('assets/theme.mp3')
-bounce = pygame.mixer.Sound('assets/bounce.mp3')
-end_sound = pygame.mixer.Sound('assets/game_over.mp3')
+pygame.mixer.music.load('assets/theme.ogg')
+bounce = pygame.mixer.Sound('assets/bounce.ogg')
+end_sound = pygame.mixer.Sound('assets/game_over.ogg')
 '''pygame.mixer.music.play()'''
 pygame.mixer.music.set_volume(.4)
 penguin = pygame.transform.scale(pygame.image.load('assets/penguin.png'), (50, 50))
