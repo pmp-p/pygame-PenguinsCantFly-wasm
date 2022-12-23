@@ -9,8 +9,8 @@ WIDTH = 500
 HEIGHT = 800
 fps = 60
 timer = pygame.time.Clock()
-huge_font = pygame.font.Font("assets/Terserah.ttf", 42)
-font = pygame.font.Font("assets/Terserah.ttf", 24)
+
+
 pygame.display.set_caption("Penguins Can't Fly!")
 screen = pygame.display.set_mode([WIDTH, HEIGHT])
 bg = (135, 206, 235)
@@ -42,9 +42,9 @@ shark = pygame.transform.scale(
 )
 enemies = [[-234, random.randint(400, HEIGHT - 100), 1]]
 # sounds and music
-pygame.mixer.music.load("assets/theme.mp3.ogg")
-bounce = pygame.mixer.Sound("assets/bounce.mp3.ogg")
-end_sound = pygame.mixer.Sound("assets/game_over.mp3.ogg")
+pygame.mixer.music.load("assets/theme.ogg")
+bounce = pygame.mixer.Sound("assets/bounce.ogg")
+end_sound = pygame.mixer.Sound("assets/game_over.ogg")
 pygame.mixer.music.play()
 pygame.mixer.music.set_volume(0.2)
 
@@ -142,12 +142,37 @@ def update_objects(cloud_list, play_y, enemy_list):
 
 
 async def main():
-    global WIDTH, HEIGHT, fps, timer, huge_font, font, screen, bg, game_over
+    global WIDTH, HEIGHT, fps, timer, screen, bg, game_over
     global clouds, cloud_images, player_x, player_y, penguin, direction
     global y_speed, gravity, x_speed, x_direction, score, total_distance
     global file, read, first_high, high_score, shark, enemies, bounce, end_sound
-
+    global pygame
     run = True
+#    import pygame
+
+
+    if 1: #ok
+        huge_font = pygame.font.Font("assets/Terserah.ttf", 42)
+        font = pygame.font.Font("assets/Terserah.ttf", 24)
+    if 0: #ok
+       huge_font = pygame.font.Font(None,42)
+       font = pygame.font.Font(None, 24)
+
+
+    if 0: # BAD
+        import pygame.freetype
+        pygame.freetype.init()
+        import pygame.ftfont
+        pygame.ftfont.init()
+
+        huge_font = pygame.ftfont.Font("assets/Terserah.ttf", 42)
+        font = pygame.ftfont.Font("assets/Terserah.ttf", 24)
+
+
+    end_text = huge_font.render("Penguins Can't Fly!", True, "black")
+    end_text2 = font.render("Game Over: Press Enter to Restart", True, "black")
+
+
     while run:
         screen.fill(bg)
         timer.tick(fps)
@@ -157,8 +182,6 @@ async def main():
         enemies = move_enemies(enemies, score)
         player_y, clouds, enemies = update_objects(clouds, player_y, enemies)
         if game_over:
-            end_text = huge_font.render("Penguins Can't Fly!", True, "black")
-            end_text2 = font.render("Game Over: Press Enter to Restart", True, "black")
             screen.blit(end_text, (70, 20))
             screen.blit(end_text2, (60, 80))
             player_y = -300
